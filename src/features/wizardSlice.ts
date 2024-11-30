@@ -6,7 +6,13 @@ interface WizardState {
   maxSteps: number;
   formData: {
     nome: string;
-    idade: number;
+    cpf: string;
+    rendaMensal: string;
+    idade: string;
+    cidade: string;
+    razaoSocial: string;
+    cnpj: string;
+    faturamentoMensal: string;
   };
 }
 
@@ -15,7 +21,13 @@ const initialState: WizardState = {
   maxSteps: 3,
   formData: {
     nome: "",
-    idade: 0,
+    cpf: "",
+    rendaMensal: "",
+    idade: "",
+    cidade: "",
+    razaoSocial: "",
+    cnpj: "",
+    faturamentoMensal: "",
   },
 };
 
@@ -31,7 +43,16 @@ const wizardSlice = createSlice({
     },
     setFormData: (
       state,
-      action: PayloadAction<{ nome: string; idade: number }>
+      action: PayloadAction<{
+        nome: string;
+        cpf: string;
+        rendaMensal: string;
+        idade: string;
+        cidade: string;
+        razaoSocial: string;
+        cnpj: string;
+        faturamentoMensal: string;
+      }>
     ) => {
       state.formData = action.payload;
     },

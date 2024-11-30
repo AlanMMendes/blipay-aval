@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nextStep, prevStep, setFormData } from "../../features/wizardSlice";
+import { nextStep, prevStep } from "../../features/wizardSlice";
 import { AppDispatch } from "../../store/store";
 import CreditForm from "../Form";
 
@@ -8,13 +8,7 @@ const WizardForm: React.FC = () => {
   const { currentStep, formData } = useSelector((state: any) => state.wizard);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [nome, setNome] = useState(formData.nome);
-  const [idade, setIdade] = useState(formData.idade);
-
   const handleNext = () => {
-    if (currentStep === 1) {
-      dispatch(setFormData({ nome, idade }));
-    }
     dispatch(nextStep());
   };
 
@@ -32,10 +26,48 @@ const WizardForm: React.FC = () => {
         );
       case 2:
         return (
-          <div>
-            <h2>Passo 2: Confirmar Dados</h2>
-            <p>Nome: {nome}</p>
-            <p>Idade: {idade}</p>
+          <div className="w-full h-[480px] flex justify-center items-center flex-col">
+            <form className="flex flex-col h-full rounded-lg p-4 justify-center items-center max-w-[480px]">
+              <h1 className="text-lg text-gray-800">
+                Confirme os dados abaixo:
+              </h1>
+              <label className="text-gray-500 text-sm">
+                Seu nome: <span className="text-black">{formData.nome}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                CPF: <span className="text-black">{formData.cpf}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                Renda Mensal:{" "}
+                <span className="text-black">R${formData.rendaMensal}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                Sua idade: <span className="text-black">{formData.idade}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                Cidade: <span className="text-black">{formData.cidade}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                Razão Social:{" "}
+                <span className="text-black">{formData.razaoSocial}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                CNPJ: <span className="text-black">{formData.cnpj}</span>
+              </label>
+
+              <label className="text-gray-500 text-sm">
+                Seu faturamento mensal:{" "}
+                <span className="text-black">
+                  R${formData.faturamentoMensal}
+                </span>
+              </label>
+            </form>
           </div>
         );
       case 3:
@@ -52,13 +84,16 @@ const WizardForm: React.FC = () => {
     for (let i = 1; i <= totalSteps; i++) {
       const isActive = i === currentStep;
       const isCompleted = i < currentStep;
+      const isPrevious = i === currentStep - 1;
 
       circles.push(
         <div
           key={i}
           className={`w-4 h-4 rounded-full flex justify-center items-center text-white font-bold ${
             isActive
-              ? "bg-green-500 scale-110"
+              ? "bg-[#2F1A4B] scale-110"
+              : isPrevious
+              ? "bg-[#442370]"
               : isCompleted
               ? "bg-gray-300"
               : "bg-gray-500"
@@ -98,7 +133,7 @@ const WizardForm: React.FC = () => {
       </div>
 
       {renderStep()}
-      <div className="justify-center h-auto items-center flex flex-row gap-4">
+      <div className="justify-center h-auto items-center flex flex-row gap-4 px-2 py-2 absolute bottom-0">
         {currentStep > 1 && (
           <button
             className="border-2 max-w-64 max-h-12 border-[#2F1A4B] dark:text-black text-black rounded-full p-3 transition-all duration-200"
@@ -108,14 +143,6 @@ const WizardForm: React.FC = () => {
           </button>
         )}
         {currentStep < 3 && currentStep !== 1 && (
-          <button
-            className="border-2 max-w-64 max-h-12 border-[#2F1A4B] dark:text-black text-black rounded-full p-3 transition-all duration-200"
-            onClick={handleNext}
-          >
-            Próximo
-          </button>
-        )}
-        {currentStep === 3 && (
           <button
             className="border-2 max-w-64 max-h-12 border-[#2F1A4B] dark:text-black text-black rounded-full p-3 transition-all duration-200"
             onClick={() => alert("Processo concluído!")}
