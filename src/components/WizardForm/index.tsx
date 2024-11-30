@@ -1,4 +1,5 @@
 import React from "react";
+import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { nextStep, prevStep } from "../../features/wizardSlice";
 import { AppDispatch } from "../../store/store";
@@ -107,28 +108,7 @@ const WizardForm: React.FC = () => {
 
   return (
     <div className="h-full w-full flex flex-col gap-2">
-      {currentStep === 1 && (
-        <div className="bg-[#2F1A4B] w-full h-auto py-3 flex flex-col justify-center items-center">
-          <h1 className="text-center text-2xl font-sans font-extralight  text-white">
-            Cadastro
-          </h1>
-        </div>
-      )}
-      {currentStep === 2 && (
-        <div className="bg-[#2F1A4B] w-full h-auto py-3 flex flex-col justify-center items-center">
-          <h1 className="text-center text-2xl font-sans font-extralight  text-white">
-            Confirme os dados
-          </h1>
-        </div>
-      )}
-      {currentStep === 3 && (
-        <div className="bg-[#2F1A4B] w-full h-auto py-3 flex flex-col justify-center items-center">
-          <h1 className="text-center text-2xl font-sans font-extralight  text-white">
-            Resultado
-          </h1>
-        </div>
-      )}
-      <div className="flex justify-center relative items-center h-auto">
+      <div className="flex justify-center relative items-center h-auto mt-5">
         {renderProgressCircles()}
       </div>
 
@@ -136,15 +116,16 @@ const WizardForm: React.FC = () => {
       <div className="justify-center h-auto items-center flex flex-row gap-4 px-2 py-2 absolute bottom-0">
         {currentStep > 1 && (
           <button
-            className="border-2 max-w-64 max-h-12 border-[#2F1A4B] dark:text-black text-black rounded-full p-3 transition-all duration-200"
+            className="border bg-white bottom-0 max-w-64 flex justify-between items-center max-h-12 border-[#2F1A4B] dark:text-black text-black rounded-full p-3 transition-all duration-200"
             onClick={handlePrev}
           >
-            Voltar
+            <FaArrowLeft className="w-5 h-5 text-[#2F1A4B]" />
+            <span>Voltar</span>
           </button>
         )}
         {currentStep < 3 && currentStep !== 1 && (
           <button
-            className="border-2 max-w-64 max-h-12 border-[#2F1A4B] dark:text-black text-black rounded-full p-3 transition-all duration-200"
+            className="border bg-[#2F1A4B] bottom-0 max-w-64 flex text-white justify-center items-center max-h-12 border-[#2F1A4B] rounded-full p-3 transition-all duration-200"
             onClick={() => alert("Processo concluído!")}
           >
             Finalizar
